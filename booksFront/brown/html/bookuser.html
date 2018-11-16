@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用户注册</title>
+    <!-- <script src="infornal/js/jquery-3.2.1.js"></script> -->
+    <script src="../js/jquery-3.2.1.js"></script>
+    <!-- <link rel="stylesheet" href="infornal/css/bootstrap.css"> -->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <!-- <link rel="stylesheet" href="infornal/css/bootstrap.css"> -->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <!-- <script src="infornal/js/bootstrap.js"></script> -->
+    <script src="../js/bootstrap.js"></script>
+
+    <style>
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .fanhuiIndex {
+            padding: 10px 20px
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="fanhuiIndex">
+            <i class="glyphicon glyphicon-share-alt"></i>
+            <a href="/index"> &nbsp; 返回</a>
+            <hr>
+            <h3>用户注册:</h3>
+        </div>
+        <div class="row" style="padding: 0 20px">
+            <div class="col-md-6 col-sm-8 col-xs-12">
+                <form action="http://120.78.75.213:8080/books/S_register" method="POST">
+                    <div class="form-group">
+                        <label for="username">用户名:</label>
+                        <span id="iftrue" style="color: red;float: right">用户已存在</span>
+                        <input type="text" class="form-control" id="username" onblur="ifTrue()" name="username" placeholder="请输入用户名" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">密码：</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="remark">备注:</label>
+                        <textarea class="form-control" rows="2" name="remark" id="remark" placeholder="注释" required></textarea>
+
+                    </div>
+                    <button type="submit " class="btn btn-default ">提交</button>
+                    <button type="button" id="delectBtn" class="btn btn-default ">重置</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#iftrue').hide()
+        })
+        $('#delectBtn').on('click', function() {
+            $('#username').val('');
+            $('#password').val('');
+            $('#remark').val('');
+        })
+
+        function ifTrue() {
+            var username = $("#username").val();
+            $.ajax({
+                url: 'http://120.78.75.213:8080/books/ifSaveUser',
+                data: {
+                    username: username
+                },
+                success: function ifDemo(e) {
+                    if (e.ifTrue) {
+                        $('#iftrue').hide()
+                    } else {
+                        $('#iftrue').show()
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

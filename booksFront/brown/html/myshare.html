@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>成为会员</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 图标 -->
+    <script src="../css/iconfont.js"></script>
+    <!-- import Vue before Element -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- import JavaScript -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!-- bootstrap -->
+    <script src="../js/jquery-3.2.1.js"></script>
+    <!-- jquery.form.js -->
+    <script src="../js/jquery.form.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/bootstrap-theme.css">
+    <script src="../js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../css/demoIcon.css">
+
+
+
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top ">
+        <div class="container-fluid bgcolor ">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header ">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" style="border: none"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://localhost:9090/showUser" style="color: white">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-tushu"></use>
+                    </svg>&nbsp; Books_Jt</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <div class="navbar-form navbar-left">
+                            <div class="form-group">
+                                <input type="text" id="searchString" class="form-control" onkeydown="keyupEnter(event)"
+                                    placeholder="Search">
+                            </div>
+                            <button type="button" onclick="searchAllBooks(1)" class="btn btn-success">Search</button>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="./shoppingBooks.html" target="_blank">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-gouwuche"></use>
+                            </svg>&nbsp; 购物车</a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-user"></use>
+                            </svg>&nbsp;你好！
+                            <span id="userVV" style=" font-size: 20px;color: rgb(255, 136, 0);font-weight: bold;display: none">\/</span>
+                            <span id="userID">用户</span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a data-toggle="modal" data-target="#mySetting">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-setting-fill"></use>
+                                    </svg>&nbsp;设置</a>
+                            </li>
+                            <li>
+                                <a href="./collectionbooks.html" target="_blank">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-alert"></use>
+                                    </svg> &nbsp;收藏
+                                </a>
+                            </li>
+                            <li>
+                                <a href="./myshare.html" target="_blank">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-reddit"></use>
+                                    </svg> &nbsp;成为会员
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="http://120.78.75.213:8080/books/index">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-logout"></use>
+                                    </svg>&nbsp;注销</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container Box">
+
+
+        <div id="app">
+            <h3>如何成为会员？下载无限制？</h3>
+            <hr>
+            <el-steps :active="active" finish-status="success" align-center>
+                <el-step title="如何成为会员?" icon="el-icon-picture" description="想享受更好的体验吗？那就成为会员吧!"></el-step>
+                <el-step title="查看你的共享" icon=" el-icon-upload" description="你共享的东西都可以在这里看到哦"></el-step>
+                <el-step title="共享你的书籍" icon="el-icon-edit" description="分享你的爱好，寻找共同的朋友吧"></el-step>
+                <el-step title="成为会员!" icon="el-icon-service" description="恭喜你成为我们的一员"></el-step>
+            </el-steps>
+            <hr>
+            <div class="boxs" v-if='active == 1'>
+                <h4>1.怎样才能成为会员？</h4>
+                <p v-text="ac1String0"></p>
+                <p v-text="ac1String1"></p>
+                <p v-text="ac1String2"></p>
+                <h4>2.成为会员有哪些好处?</h4>
+                <p v-text="ac1String3"></p>
+                <p v-text="ac1String4"></p>
+                <h4>3.赶紧行动吧</h4>
+                <p>分享让世界更美好!</p>
+                <el-button type="primary" style="margin-top: 10px;" @click="next" plain>已详细了解！谢谢</el-button>
+            </div>
+            <div class="boxs" v-if='active == 2'>
+                <h4>你已经分享了 {{shareUser.shareNul}} 本书:</h4>
+                <div class="media" :style="items.remove == 100?'':'border: 1px solid #e9900b;'" v-for="items in shareUserList">
+                    <div class="media-left media-middle">
+                        <a href="#">
+                            <img class="media-object" width="64" height="64" :src="items.bookimg">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading" v-text="items.bookname"></h4>
+                        {{items.bookintro}}
+                        <span style="float: right;padding-right: 20px">
+                            <span>分享时间:{{items.altertime}}</span>
+                            &nbsp;&nbsp;&nbsp;
+                            <el-button type="primary" icon="el-icon-edit" size="small" @click="editShare(items)" circle></el-button>
+                            <el-button type="primary" v-if="items.remove == 100" size="small" @click="downshare(items.id)"
+                                icon="el-icon-delete" circle></el-button>
+                            <el-button type="primary" v-if="items.remove == 101" size="small" @click="upshare(items.id)"
+                                icon="el-icon-upload" circle></el-button>
+
+                        </span>
+                    </div>
+                </div>
+
+                <el-button type="primary" style="margin-top: 10px;" @click="next" plain>已详细了解！谢谢</el-button>
+            </div>
+            <div class="boxs" v-if='active == 3'>
+                <div class="formclass">
+                    <el-form :label-position="labelPosition" label-width="120px" :model="bookForm" :rules="rules" ref="bookForm"
+                        class="demo-ruleForm">
+                        <el-form-item label="书名:" prop="bookname">
+                            <el-input v-model="bookForm.bookname" clearable></el-input>
+                        </el-form-item>
+                        <el-form-item label="上传者:" prop="manage">
+                            <el-input v-model="bookForm.manage" disabled clearable></el-input>
+                        </el-form-item>
+                        <el-form-item label="书籍种类:" prop="kindname">
+                            <el-select v-model="bookForm.kindname" placeholder="请选择书籍种类">
+                                <el-option label="文学" value="文学"></el-option>
+                                <el-option label="传记" value="传记"></el-option>
+                                <el-option label="青春动漫" value="青春动漫"></el-option>
+                                <el-option label="艺术与摄影" value="艺术与摄影"></el-option>
+                                <el-option label="少儿" value="少儿"></el-option>
+                                <el-option label="社会科学" value="社会科学"></el-option>
+                                <el-option label="历史" value="历史"></el-option>
+                                <el-option label="励志与体育" value="励志与体育"></el-option>
+                                <el-option label="旅游" value="旅游"></el-option>
+                                <el-option label="科技与生活" value="科技与生活"></el-option>
+                                <el-option label="外语学习" value="外语学习"></el-option>
+                                <el-option label="小说" value="小说"></el-option>
+
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="上传图片：">
+                            <form style="height:40px">
+                                <input type="file" @change="getFile($event)" name="file" accept="image/gif, image/jpeg,image/pnd">
+                                <el-row style=" position: relative;top: -40px;right: -80%;">
+                                    <el-button type="primary" @click="submitWord($event,0)" icon="el-icon-picture" size="small"
+                                        circle></el-button>
+                                </el-row>
+                            </form>
+                        </el-form-item>
+                        <el-form-item label="封面地址:" prop="bookimg">
+                            <el-input type="textarea" autosize v-model="bookForm.bookimg" disabled clearable></el-input>
+                        </el-form-item>
+                        <el-form-item label="上传文件:" style="height: 40px;">
+                            <form id="ajaxForm" method="post" action="http://localhost:9090/htmlUpload" enctype="multipart/form-data">
+                                <input type="file" name="file" accept=".xls,.doc,.txt,.pdf,.zip" />
+                            </form>
+                            <el-row style=" position: relative;top: -40px;right: -80%;">
+                                <el-button type="primary" @click="lplp" icon="el-icon-picture" size="small" circle></el-button>
+                            </el-row>
+                        </el-form-item>
+                        <el-form-item label="书籍下载地址:" prop="downloadIVN">
+                            <el-input type="textarea" autosize v-model="bookForm.downloadIVN" disabled clearable></el-input>
+                        </el-form-item>
+                        <el-form-item label="书本简介" prop="bookintro">
+                            <el-input type="textarea" autosize v-model="bookForm.bookintro" clearable></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="submitForm('bookForm')">确定</el-button>
+                            <el-button @click="resetForm('bookForm')">重置</el-button>
+                        </el-form-item>
+                    </el-form>
+                </div>
+
+
+            </div>
+            <div class="boxs" v-if='active == 4'>
+                <h4>
+                    恭喜你已经成为我们的会员之一，去享受会员吧!
+                    (PS:重新登录后即可！)
+                </h4>
+            </div>
+        </div>
+
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="mySetting" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">个人信息修改</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" action="http://localhost:9090/uphtmlUsers" method="post">
+                        <div class="form-group">
+                            <label for="usernameInput" class="col-sm-2 control-label">Username:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="usernameInput" placeholder="用户名" name="usernameInput1"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordInput" class="col-sm-2 control-label">Password:</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="passwordInput" name="passwordInput1"
+                                    placeholder="密码" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="textareaInput" class="col-sm-2 control-label">备注:</label>
+                            <div class=" col-sm-10">
+                                <textarea class="form-control" name="remarkInput1"></textarea>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/getfunction.js"></script>
+    <script src="../js/myshare.js"></script>
+    <script>
+        $('#usernameInput').val(sessionStorage.getItem('username'));
+        $(document).ready(function () {
+            $.ajax({
+                url: "http://localhost:9090/memberIf",
+                method: "POST",
+                async: false,
+                success: function (e) {
+                    // console.log(e.userPor[0].ifMember)
+                    if (e.userPor[0].ifMember == 1) {
+
+                        document.getElementById("userVV").style.display = "inline"
+                    }
+                },
+                error: function (err) {
+                    alert(err + "错误");
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>

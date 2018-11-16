@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>首页</title>
+    <script src="infornal/js/jquery-3.2.1.js"></script>
+    <link rel="stylesheet" href="infornal/css/bootstrap.css">
+    <link rel="stylesheet" href="infornal/css/bootstrap-theme.css">
+    <script src="infornal/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="infornal/css/indexCss.css">
+    <!-- 图标 -->
+    <script src="infornal/css/iconfont.js"></script>
+    <!-- Vue -->
+    <script src="infornal/js/vue.js"></script>
+
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top ">
+        <div class="container-fluid bgcolor ">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header ">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" style="border: none"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://localhost:9090/showUser" style="color: white">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-tushu"></use>
+                    </svg>&nbsp; Books_Jt</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <div class="navbar-form navbar-left">
+                            <div class="form-group">
+                                <input type="text" id="searchString" class="form-control" onkeydown="keyupEnterIndex(event)"
+                                    placeholder="Search">
+                            </div>
+                            <button type="button" onclick="searchAllBooks(0)" class="btn btn-success">Search</button>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="infornal/html/shoppingBooks.html" target="_blank">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-gouwuche"></use>
+                            </svg>&nbsp; 购物车</a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-user"></use>
+                            </svg>&nbsp;
+                            你好！
+                            <span id="userVV" style=" font-size: 20px;color: rgb(255, 136, 0);font-weight: bold;display: none">\/</span>
+                            <span id="userID">用户</span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a data-toggle="modal" data-target="#mySetting">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-setting-fill"></use>
+                                    </svg>&nbsp;设置</a>
+                            </li>
+                            <li>
+                                <a href="infornal/html/collectionbooks.html" target="_blank">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-alert"></use>
+                                    </svg> &nbsp;收藏
+                                </a>
+                            </li>
+                            <li>
+                                <a href="infornal/html/myshare.html" target="_blank">
+
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-reddit"></use>
+                                    </svg> &nbsp;成为会员
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="http://120.78.75.213:8080/books/index">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-logout"></use>
+                                    </svg>&nbsp;注销</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="banana">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+            </ol>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox" id="banana">
+
+                <div v-for="(items,index) in imgs" :key="index" :class="items.class">
+                    <a v-on:click="jumpNews(items.newsid)">
+                        <img v-bind:id="items.id" :src="items.url">
+                        <div class="carousel-caption">
+                            <h3 v-text="items.title"></h3>
+                            <p v-text="items.context"></p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <div id="lowBananr">
+            <transition name="fade">
+                <div v-if="loadBananr">
+                    <div style="width: 100%;background-color: white;padding: 5px 0">
+                        <div class="kindNav" id="kindNav">
+                            <ul class="nav nav-pills nav-justified ">
+                                <li v-for="(kindid,index) in kinds " role="presentation" :class="kindid.kindClass">
+                                    <a role="tab" data-toggle="tab" v-text='kindid.kindname' @click="testButton(kindid.kindname)"></a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="container" style="position:relative;">
+                        <!-- Tab panes -->
+                        <div class="tab-content tabBox" id="contains">
+                            <div role="tabpanel">
+                                <div class="row" style="padding: 0 10px">
+                                    <div v-for="lis in kindLis" class="media mediabox col-md-6 ">
+                                        <a v-on:click="jumpBook(lis.id,lis.kindid)">
+                                            <div class="media-left media-middle">
+                                                <img class="media-object" width="64" height="64" :src="lis.bookimg">
+                                            </div>
+                                            <div class="media-body">
+                                                <h4 class="media-heading" v-text="lis.bookname"></h4>
+                                                <p v-text="lis.bookintro" class="media_bookintro"></p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pageDiv">
+                            <nav aria-label="Page navigation" class="pageNav">
+                                <ul class="pagination">
+                                    <li>
+                                        <a @click="pageNul(page.begin)" v-text="page.begin"></a>
+                                    </li>
+                                    <li>
+                                        <a @click="pageNul(page.end)" v-text="page.end"></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </transition>
+
+
+            <div class="downBanar" v-on:click=" loadBananr =!loadBananr">
+                <i :class=" loadBananr?upClass:downClass" id="dOru"></i>
+            </div>
+        </div>
+    </div>
+    <div class="fixedBoxGg">
+        <div class="fixedBoxDiv">
+            <div>
+                <i class="glyphicon glyphicon-comment"></i>
+                <img src="http://120.78.75.213:8080/kindid/qq.jpg" alt="QQ">
+                <p> 联系我们:</p>
+                <p>QQ:2028632219</p>
+            </div>
+        </div>
+        <div class="ifManGG" style="position:relative;width: 300px" id="imgGg">
+            <span id="delGg">X</span>
+            <img src="http://120.78.75.213:8080/kindid/guanggao.jpg" alt="广告">
+        </div>
+    </div>
+    <div class="contentIndex container">
+        <div class="row">
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12" style="float: left;">
+                <div style="width: 100%" id="kindli">
+                    <div v-for="(someLi,index) in lis">
+                        <div class="kindli" v-bind:id="someLi.USname">
+                            <div class="liTitle">
+                                <h4>
+                                    <i class="glyphicon glyphicon-map-marker" style="color: rgb(19, 96, 158);" v-text="'·'+(index+1)"></i>
+                                    {{someLi.CNname}} :
+                                    <span>
+                                        <a @click="jumpmorebooks(index+1)"> 更多</a>
+                                    </span>
+                                </h4>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6 col-md-4 col-xs-12" v-for="(kindNul,index) in (someLi.data)">
+                                    <div class="thumbnail boxKind">
+                                        <img v-bind:src="kindNul.bookimg" alt="...">
+                                        <div class="caption">
+                                            <h3>{{kindNul.bookname}}</h3>
+                                            <p class="bookintro">{{kindNul.bookintro}}</p>
+                                            <p class="Adetails">
+                                                <a @click="jumpBook(kindNul.id,kindNul.kindid)">
+                                                    <i class="glyphicon glyphicon-eye-open"></i> 查看详情&gt;&gt;
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                <div class="boxRight">
+                    <div class="list-group listA" id="newlistId">
+                        <a href="infornal/html/morenewbooks.html" class="list-group-item list-group-item-success ">
+                            新书榜
+                        </a>
+                        <a @click="jumpNewBook(items.id)" class="list-group-item" v-for="items in newList" v-text="items.bookname"></a>
+                        <a @click="morelistNew" v-if="morestatu" class="list-group-item">更多</a>
+                        <a @click="jumpNewBook(moreitem.id)" v-if="!morestatu" v-for="moreitem in morelists" v-text="moreitem.bookname"
+                            class="list-group-item"></a>
+                        <a @click="putmore" v-if="!morestatu" class="list-group-item"> 收起</a>
+                    </div>
+                    <div class="list-group listA" id="quitelist">
+                        <a href="infornal/html/morenews.html" class="list-group-item list-group-item-success ">
+                            资讯块
+                        </a>
+                        <a @click="jumpNews(itemquite.newsid)" class="list-group-item" v-for="itemquite in quiteList"
+                            v-text="itemquite.title"></a>
+                        <a @click="morelistQuite" v-if="quitestatu" class="list-group-item">更多</a>
+                        <a @click="jumpNews(moreitems.newsid)" v-if="!quitestatu" v-for="moreitems in quiteMorelists"
+                            v-text="moreitems.title" class="list-group-item"></a>
+                        <a @click="putmore" v-if="!quitestatu" class="list-group-item"> 收起</a>
+                    </div>
+                </div>
+                <img class="ifManGG" src="http://120.78.75.213:8080/kindid/guanggao.jpg" style="width:100%" alt="广告">
+            </div>
+        </div>
+
+
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="mySetting" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">个人信息修改</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" action="http://localhost:9090/uphtmlUsers" method="post">
+                        <div class="form-group">
+                            <label for="usernameInput" class="col-sm-2 control-label">Username:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="usernameInput" placeholder="用户名" name="usernameInput1"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordInput" class="col-sm-2 control-label">Password:</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="passwordInput" name="passwordInput1"
+                                    placeholder="密码" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="textareaInput" class="col-sm-2 control-label">备注:</label>
+                            <div class=" col-sm-10">
+                                <textarea class="form-control" name="remarkInput1"></textarea>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="infornal/js/getfunction.js"></script>
+    <script src="infornal/js/indexOther.js"></script>
+    <script src="infornal/js/indexContain.js"></script>
+    <script>
+        $('#usernameInput').val(sessionStorage.getItem('username'));
+        $(document).ready(function () {
+            let gg = document.querySelectorAll(".ifManGG");
+            $.ajax({
+                url: "http://localhost:9090/memberIf",
+                method: "POST",
+                async: false,
+                success: function (e) {
+                    // console.log(e.userPor[0].ifMember)
+                    if (e.userPor[0].ifMember == 1) {
+                        $(".ifManGG").hide();
+                        document.getElementById("userVV").style.display = "inline"
+                    }
+                },
+                error: function (err) {
+                    alert(err + "错误");
+                }
+            });
+        })
+    </script>
+
+</body>
+
+</html>

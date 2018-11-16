@@ -1,0 +1,46 @@
+body,
+html {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(235, 235, 235, 1);
+}
+
+.bgcolor {
+    background-color: rgb(2, 53, 54);
+    /* opacity: 0.5 */
+}
+
+.icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+    font-size: 20px;
+}
+
+.banana {
+    width: 100%;
+    margin-top: 50px;
+}
+
+.imgbox {
+    width: 100%
+}
+
+#imgbx {
+    width: 100%
+}
+
+.newslist>img,
+.newslist>p {
+    padding-top: 10px;
+    margin-bottom: 20px;
+    float: left;
+}
+
+.newslist>p {
+    width: 90%;
+    padding-left: 20px;
+    word-wrap: break-word;
+}

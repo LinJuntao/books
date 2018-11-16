@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/jquery-3.2.1.js"></script>
+    <script src="js/jquery.form.js"></script>
+</head>
+
+<body>
+    <form id="ajaxForm" method="post" action="http://localhost:9090/htmlUpload" enctype="multipart/form-data">
+        <input type="file" name="file" />
+        <button type="submit" id="btnSubmit">上传</button>
+    </form>
+    <button id="btnButton" type="button">提交2</button>
+    <script type="text/javascript">
+        $("#btnSubmit").click(function () {
+            $("#ajaxForm").ajaxSubmit(function (e) {
+                console.log(e[0])
+                alert("提交成功1");
+            });
+            return false;
+        });
+    </script>
+</body>
+
+</html>
