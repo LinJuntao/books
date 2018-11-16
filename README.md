@@ -2,32 +2,29 @@
 
 ## booksBackstage 是后台代码，是用Java 框架 jfinal 写的 
 
+>该项目是用maven 打包而成的一个javaweb 项目，如需使用，需要先下载安装maven，之后在进行打包运行下载maven的jar包，我使用的编辑器为vscode，打开文件夹后，会自动提醒安装插件，之后只要complie 即可
+
 ## booksFront 是前端展示文件
 
 > brown 为首页展示的文件，已全部复制进后台代码的webapps 当中
 > manager 为后台展示的文件，是通过webpack 脚手架的一个单页面应用
   
+``` 使用：
+# 搭建环境
+npm install
+
+# 运行  localhost:8080
+npm run dev
+
+# 打包
+npm run build
+
+```
 
 ## mysql 是数据库文件，
 
 > 在本地数据库中创建 booksmanage 数据库，然后导入.sql 文件即可
 
 > 这是后台管理系统
-
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
