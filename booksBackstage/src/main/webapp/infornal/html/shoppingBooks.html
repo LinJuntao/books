@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>购物车</title>
+    <!-- loading -->
+    <link rel="stylesheet" href="../css/resetLoading.css">
+    <link rel="stylesheet" href="../css/styleLoading.css">
+    <script src="../js/jquery-3.2.1.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 图标 -->
+    <script src="../css/iconfont.js"></script>
+    <!-- import Vue before Element -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- import JavaScript -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!-- bootstrap -->
+    <script src="../js/jquery-3.2.1.js"></script>
+    <!-- jquery.form.js -->
+    <script src="../js/jquery.form.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/bootstrap-theme.css">
+    <script src="../js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../css/shopping.css">
+
+
+
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top ">
+        <div class="container-fluid bgcolor ">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header ">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" style="border: none"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://120.78.75.213:8080/books/showUser" style="color: white">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-tushu"></use>
+                    </svg>&nbsp; Books_Jt</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <div class="navbar-form navbar-left">
+                            <div class="form-group">
+                                <input type="text" id="searchString" class="form-control" onkeydown="keyupEnter(event)"
+                                    placeholder="Search">
+                            </div>
+                            <button type="button" onclick="searchAllBooks(1)" class="btn btn-success">Search</button>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="./shoppingBooks.html" target="_blank">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-gouwuche"></use>
+                            </svg>&nbsp; 购物车</a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-user"></use>
+                            </svg>&nbsp; 你好！
+                            <span id="userVV" style=" font-size: 20px;color: rgb(255, 136, 0);font-weight: bold;display: none">\/</span>
+                            <span id="userID">用户</span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a data-toggle="modal" data-target="#mySetting">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-setting-fill"></use>
+                                    </svg>&nbsp;设置</a>
+                            </li>
+                            <li>
+                                <a href="../html/collectionbooks.html" target="_blank">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-alert"></use>
+                                    </svg> &nbsp;收藏
+                                </a>
+                            </li>
+                            <li>
+                                <a href="./myshare.html" target="_blank">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-reddit"></use>
+                                    </svg> &nbsp;成为会员
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="http://120.78.75.213:8080/books/index">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-logout"></use>
+                                    </svg>&nbsp;注销</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container" style="padding-top: 60px;background-color: white;border-radius: 5px;padding-bottom: 20px">
+        <ol class="breadcrumb">
+            <li>
+                <a href="http://120.78.75.213:8080/books/showUser">
+                    首页
+                </a>
+            </li>
+            <li class="active">购物车</li>
+        </ol>
+        <div id="shoppingBooks">
+            <h3>购物车:</h3>
+            <hr>
+            <el-checkbox-group v-model="checkboxGroup" :min="1" :max="5">
+                <el-checkbox v-for="(sp_items,index) in shoppingBooksdata" :label=" sp_items.kindid+','+sp_items.id+','+sp_items.shopping_id "
+                    class="checkBoxsG" border>
+                    书名: {{sp_items.bookname}} &nbsp;&nbsp; 简介: {{sp_items.bookintro}}
+                </el-checkbox>
+
+            </el-checkbox-group>
+
+            <span style="float:right;margin-top:10px;margin-right: 10px ">
+                <el-button type="success" icon="el-icon-download" v-on:click="someDownload">批量下载</el-button>
+                <el-button type="danger" v-on:click="delectMore" icon="el-icon-delete">删除</el-button>
+            </span>
+
+            <!-- ******loading -->
+            <div class="loadBox" v-if="loadingIf">
+                <h2>拼命打包压缩中,请稍等一下！！</h2>
+                <div class="l-wrapper">
+                    <svg viewBox="0 0 120 120" version="1.1" style="overflow: visible;">
+                        <g id="circle" class="g-circles g-circles--v4">
+                            <circle id="12" transform="translate(35, 16.698730) rotate(-30) translate(-35, -16.698730) "
+                                cx="35" cy="16.6987298" r="10"></circle>
+                            <circle id="11" transform="translate(16.698730, 35) rotate(-60) translate(-16.698730, -35) "
+                                cx="16.6987298" cy="35" r="10"></circle>
+                            <circle id="10" transform="translate(10, 60) rotate(-90) translate(-10, -60) " cx="10" cy="60"
+                                r="10"></circle>
+                            <circle id="9" transform="translate(16.698730, 85) rotate(-120) translate(-16.698730, -85) "
+                                cx="16.6987298" cy="85" r="10"></circle>
+                            <circle id="8" transform="translate(35, 103.301270) rotate(-150) translate(-35, -103.301270) "
+                                cx="35" cy="103.30127" r="10"></circle>
+                            <circle id="7" cx="60" cy="110" r="10"></circle>
+                            <circle id="6" transform="translate(85, 103.301270) rotate(-30) translate(-85, -103.301270) "
+                                cx="85" cy="103.30127" r="10"></circle>
+                            <circle id="5" transform="translate(103.301270, 85) rotate(-60) translate(-103.301270, -85) "
+                                cx="103.30127" cy="85" r="10"></circle>
+                            <circle id="4" transform="translate(110, 60) rotate(-90) translate(-110, -60) " cx="110" cy="60"
+                                r="10"></circle>
+                            <circle id="3" transform="translate(103.301270, 35) rotate(-120) translate(-103.301270, -35) "
+                                cx="103.30127" cy="35" r="10"></circle>
+                            <circle id="2" transform="translate(85, 16.698730) rotate(-150) translate(-85, -16.698730) "
+                                cx="85" cy="16.6987298" r="10"></circle>
+                            <circle id="1" cx="60" cy="10" r="10"></circle>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="mySetting" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">个人信息修改</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" action="http://120.78.75.213:8080/books/uphtmlUsers" method="post">
+                        <div class="form-group">
+                            <label for="usernameInput" class="col-sm-2 control-label">Username:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="usernameInput" placeholder="用户名" name="usernameInput1"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordInput" class="col-sm-2 control-label">Password:</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="passwordInput" name="passwordInput1"
+                                    placeholder="密码" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="textareaInput" class="col-sm-2 control-label">备注:</label>
+                            <div class=" col-sm-10">
+                                <textarea class="form-control" name="remarkInput1"></textarea>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script src="../js/getfunction.js"></script>
+    <script src="../js/shopping.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: "http://120.78.75.213:8080/books/memberIf",
+                method: "POST",
+                async: false,
+                success: function (e) {
+                    // console.log(e.userPor[0].ifMember)
+                    if (e.userPor[0].ifMember == 1) {
+
+                        document.getElementById("userVV").style.display = "inline"
+                    }
+                },
+                error: function (err) {
+                    alert(err + "错误");
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>

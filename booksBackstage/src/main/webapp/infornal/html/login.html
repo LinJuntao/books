@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <title>登录</title>
+
+    <link rel="stylesheet" type="text/css" href="infornal/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="infornal/css/demo.css" />
+
+    <!-- bootstrap引入 -->
+    <script src="infornal/js/jquery-3.2.1.js"></script>
+    <link rel="stylesheet" href="infornal/css/bootstrap.css">
+    <link rel="stylesheet" href="infornal/css/bootstrap-theme.css">
+    <script src="infornal/js/bootstrap.js"></script>
+    <!--必要样式-->
+    <link rel="stylesheet" type="text/css" href="infornal/css/loginBack.css" />
+
+
+</head>
+
+<body>
+
+    <div class="container demo-1 classBody">
+        <div class="content">
+            <div id="large-header" class="large-header">
+                <canvas id="demo-canvas"></canvas>
+                <div>
+                    <div class="loginBack">
+                        <div class="row" style="margin-top:13% ">
+                            <div class="col-lg-3 col-lg-offset-3 col-md-5 col-md-offset-2 col-sm-7 col-sm-offset-1 col-xs-10 col-xs-offset-1 formBg">
+                                <div class="Booktitle">
+                                    <p>书城中心Demo</p>
+                                    <p>Welcome To Books Center</p>
+                                    <hr>
+                                </div>
+
+                                <form action="http://120.78.75.213:8080/books/login " class="form-group" method="POST">
+                                    <!-- <form action="http://localhost:9090/login " class="form-group" method="POST"> -->
+                                    <div class="input-group input-group-lg divBox">
+                                        <span class="input-group-addon lop">
+                                            <i class="glyphicon glyphicon-user"></i>
+                                        </span>
+                                        <input type="text" class="form-control" style="border: none" id="username" name="username"
+                                            placeholder="Username" required>
+                                    </div>
+                                    <div class="input-group input-group-lg divBox ">
+                                        <span class="input-group-addon lop">
+                                            <i class="glyphicon glyphicon-lock"></i>
+                                        </span>
+                                        <input type="password" class="form-control" style="border: none" id="password"
+                                            name="password" placeholder="Password" required>
+                                    </div>
+                                    <div class="input-group input-group-sm exDiv">
+                                        <img src="http://120.78.75.213:8080/books/valiadateImg/get?tockenId=QWERTYUISDFGHJEW?"
+                                            alt="验证码" id="img" onclick="changeCode()">
+                                        <!-- <img src="http://localhost:9090/valiadateImg/get?tockenId=QWERTYUISDFGHJEW?" -->
+                                        <!-- alt="验证码" id="img" onclick="changeCode()"> -->
+                                        <input type="text" class="form-control" style="width: 180px;height: 40px;" name="Eximg"
+                                            placeholder="验证码" required>
+                                    </div>
+
+                                    <div class="btnBlock divBox">
+                                        <button class="btn btn-lg btn-primary" type="submit">登录</button>
+                                        <a class="btn btn-lg btn-info " href="infornal/html/bookuser.html">注册</a>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- /container -->
+    <script src="infornal/js/TweenLite.min.js"></script>
+    <script src="infornal/js/EasePack.min.js"></script>
+    <script src="infornal/js/rAF.js"></script>
+    <script src="infornal/js/demo-1.js"></script>
+    <script>
+        function changeCode() {
+            document.getElementById("img").src =
+                "http://120.78.75.213:8080/books/valiadateImg/get?tockenId=QWERTYUISDFGHJEW?" +
+                // "http://localhost:9090/valiadateImg/get?tockenId=QWERTYUISDFGHJEW?" +
+                Math.random();
+        }
+    </script>
+</body>
+
+</html>
